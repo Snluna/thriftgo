@@ -404,12 +404,16 @@ func (p *{{$TypeName}}) {{$GetterName}}() (v {{$FieldTypeName}}) {
 {{- $FieldTypeName := .GoTypeName}}
 {{- $SetterName := .Setter}}
 {{- if .IsResponseFieldOfResult}}
-func (p *{{$TypeName}}) {{$SetterName}}(x interface{}) {
+func (p *{{$TypeName}}) {{$SetterName}}(x interface{}) *{{$TypeName}} {
     p.{{$FieldName}} = x.({{$FieldTypeName}})
+
+	return p
 }
 {{- else}}
-func (p *{{$TypeName}}) {{$SetterName}}(val {{$FieldTypeName}}) {
+func (p *{{$TypeName}}) {{$SetterName}}(val {{$FieldTypeName}}) *{{$TypeName}} {
 	p.{{$FieldName}} = val
+
+	return p
 }
 {{- end}}
 {{- end}}{{/* range .Fields */}}
